@@ -1,0 +1,146 @@
+a, a:visited, a:link{
+    color: black;
+    text-decoration: none;
+}
+
+nav{
+    margin: 1em 3em;
+}
+
+nav > a:not(:last-child){
+    margin-right: 1em;
+}
+
+/* ---- IDS ---- */
+
+#wrapper{
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ---- CLASSES ---- */
+
+.odd-line{
+    background-color: #ddd;
+}
+
+.even-line{
+    background-color: #fafafa;
+}
+
+.centered{
+    margin: auto;
+    width: fit-content;
+}
+
+.flexed-justify{
+    display: flex;
+    justify-content: center;
+}
+
+.space-content-1em > *{
+    margin: 0 1em;
+}
+
+h3{
+    font-size: 1.5em;
+    background-color: #6fc6ff;
+    color: white;
+    margin: 0;
+}
+
+.main-table{
+    max-width: 500px;
+}
+
+.centered{
+    text-align: center;
+    width: auto;
+}
+
+.category{
+    margin-bottom: 1em;
+    border: 1px solid black;
+}
+
+.category p{
+    margin: 0;
+    padding: 0.5em 0;
+}
+
+.category > div:first-child{
+    border-bottom: 1px solid black;
+}
+
+/* ---- FORM ---- */
+
+form > div > *{
+    margin: 0.5em 0;
+    box-sizing: border-box;
+}
+
+input[type=text]{
+    padding: 0.5em;
+    margin: 0;
+}
+
+.fancy-submit{
+    box-shadow: 0px 0px 12px -1px #3dc21b;
+	background-color: #44c767;
+	border-radius: 28px;
+	border: 1px solid #18ab29;
+	cursor: pointer;
+	color: #ffffff;
+	font-size: 1.1em;
+	padding: 8px 0;
+	text-decoration: none;
+    text-shadow: 1px 1px 10px #2f6627;
+    margin-top: 1em;
+    width: 20%;
+    min-width: 180px;
+    align-self: center;
+}
+
+.fancy-submit:hover {
+	background-color: #5cbf2a;
+}
+
+.fancy-submit:active {
+	position: relative;
+	top: 3px;
+}
+
+.input-bottom, .select-parent select{
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 2px #bbb solid;
+}
+
+.select-parent{
+    display: inline-flex;
+}
+
+.select-parent select{
+    margin-right: 0.5em;
+}
+
+input:focus, input:active{
+    outline: none;
+}
+
+.outer-input{
+    padding: 0.5em 0.2em;
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+.outer-input > label{
+    margin-right: 0.5em;
+    display: inline-block;
+    width: 12%;
+    min-width: 75px;
+    text-align: right;
+}
+

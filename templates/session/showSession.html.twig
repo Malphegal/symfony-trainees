@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ session.name }}{% endblock %}
+
+{% block body %}
+
+    <div id="wrapper" class="centered">
+        <div>
+            <h2>{{ session.name }}</h2>
+            <p>{{ session.formattedstarts }} - {{ session.ends }}</p>
+        </div>
+        <div class="flexed-justify space-content-1em">
+            <div>
+                {% for trainee in trainees %}
+                    <div class="{{ loop.index is even ? "even-line" : "odd-line" }}">
+                        <p>{{ trainee }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div>
+                <div class="main-table centered">
+                    {% for category, items in contains %}
+                        <div class="category">
+                            <div><h3>{{ category }}</h3></div>
+                            {% for item in items %}
+                                <div class="{{ loop.index is even ? "even-line" : "odd-line" }}"><p>{{ item["item"] }} - {{ item["duration"] }} jour{{ item["duration"] > 1 ? "s" : "" }}</p></div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                {{ form(itemsForm) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

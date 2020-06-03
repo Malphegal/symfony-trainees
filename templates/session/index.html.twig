@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Les sessions{% endblock %}
+{% block stylesheets %}{{ parent() }}<link href="{{ asset('/css/sessions.css') }}" rel="stylesheet">{% endblock %}
+
+{% block body %}
+
+    <div id="wrapper">
+        <div class="centered">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Formation</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Places totale</th>
+                        <th>Places réservées</th>
+                        <th>Places restantes</th>
+                        <th>Programme</th>
+                    </tr>
+                </thead>
+                {% for session in sessions %}
+                    <tbody>
+                        <tr class="{{ loop.index is even ? "even-line" : "odd-line" }}">
+                            <td class="bold">{{ session.name }}</td>
+                            <td>{{ session.formattedstarts }}</td>
+                            <td>{{ session.ends }}</td>
+                            <td>{{ session.seat }}</td>
+                            <td>{{ session.getSubscribes | length }}</td>
+                            <td class="{{ seatsLeftColor(session.getSubscribes | length, session.seat) }}">{{ session.seat - (session.getSubscribes | length) }}</td>
+                            <td><a href="{{ path("showSession", { id : session.id }) }}">Voir</a></td>
+                        </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+            <a href="{{ path("newSession") }}"> - Créer une session</a>
+        </div>
+    </div>
+
+{% endblock %}

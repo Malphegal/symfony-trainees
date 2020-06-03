@@ -1,0 +1,30 @@
+table{
+    text-align: center;
+    margin: auto;
+}
+
+th{
+    color: #eee;
+    background-color: #4eb0d6;
+    padding: 0.1em 0.2em;
+}
+
+td{
+    padding: 0.8em 1em;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.green-seat{
+    background-color: #20bb20;
+}
+
+.orange-seat{
+    background-color: #bb6020;
+}
+
+.red-seat{
+    background-color: #bb2020;
+}

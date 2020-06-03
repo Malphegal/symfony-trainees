@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Les modules{% endblock %}
+{% block stylesheets %}{{ parent() }}<link href="{{ asset('/css/items.css') }}" rel="stylesheet">{% endblock %}
+
+{% block body %}
+
+    <div id="wrapper">
+        <h2>Les modules</h2>
+        <div class="main-table centered">
+            {% for category, items in allItems %}
+                <div class="category">
+                    <div><h3>{{ category }}</h3></div>
+                    {% for item in items %}
+                        <div class="{{ loop.index is even ? "even-line" : "odd-line" }}"><p>{{ item }}</p></div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{{ path("newItem") }}"> - Ajouter un module</a>
+    </div>
+
+{% endblock %}

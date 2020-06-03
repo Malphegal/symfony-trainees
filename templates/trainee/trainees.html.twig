@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Stagiaires{% endblock %}
+{% block stylesheets %}{{ parent() }}<link href="{{ asset('/css/trainee/all.css') }}" rel="stylesheet">{% endblock %}
+
+{% block body %}
+
+    <div id="wrapper">
+        <h2>Nos stagiaires</h2>
+        <div class="all-trainees">
+            {% for trainee in trainees %}
+                <div class="trainee-row">
+                    <div class="{{ loop.index is even ? "even-line" : "odd-line" }}" data-id={{ trainee.id }}>
+                        <i class="fas fa-chevron-right"></i>
+                        <p class="name">{{ trainee }}</p>
+                        <p class="city">{{ trainee.city }}</p>
+                        <p class="phone">{{ trainee.formattedphone }}</p>
+                        <p class="birthdate">{{ trainee.formattedbirthdate }}</p>
+                        <p class="email">{{ trainee.email }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{{ path("newTrainee") }}"> - Ajouter un stagiaire</a>
+        <div id="trainee-full"></div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event)
+        { 
+            var rows = document.getElementsByClassName("trainee-row");
+            var trainees = [];
+            for (var i = 0; i < rows.length; i++)
+                trainees.push(rows[i].querySelector("div"));
+
+            for (var i = 0; i < trainees.length; i++)
+            {
+                trainees[i].addEventListener("click", function()
+                {
+                    var id = this.getAttribute('data-id');
+                    var xhr = new XMLHttpRequest();
+
+                    var url = "{{ path("showTrainee", {'id': 'id'}) }}"; 
+                    url = url.replace("id", id);
+                    xhr.open('POST', url);
+                    
+                    xhr.onreadystatechange = function(oEvent)
+                    {
+                        if (xhr.readyState == 4 && xhr.status === 200)
+                        {
+                            var response = JSON.parse(xhr.response);
+
+                            // Remove previous content
+                            var fullTrainee = document.querySelector('#trainee-full');
+                            while(fullTrainee.firstChild)
+                                fullTrainee.removeChild(fullTrainee.firstChild);
+
+                            // Add the new content to 'fullTrainee'
+                            var title = document.createElement("h3");
+                            var titleContent = document.createTextNode("Inscriptions :");
+                            title.appendChild(titleContent);
+                            fullTrainee.appendChild(title);
+                            for (var sub in response.subscribes)
+                            {
+                                var tagA = document.createElement("a");
+                                var splits = response.subscribes[sub].split('__');
+                                var content = document.createTextNode(splits[1]);
+                                tagA.appendChild(content);
+
+                                var sessionId = splits[0];
+                                var A_url = "{{ path("showSession", {'id': 'id'}) }}";
+                                A_url = A_url.replace("id", sessionId);
+                                tagA.href = A_url;
+
+                                var tagP = document.createElement("p");
+                                tagP.appendChild(tagA);
+                                fullTrainee.appendChild(tagP);
+                            }
+
+                            // Remove previous arrow-down
+                            var chevrons = document.getElementsByClassName("fa-chevron-down");
+                            for (var j = 0; j < chevrons.length; j++)
+                            {
+                                cl = chevrons[j].classList;
+                                cl.remove("fa-chevron-down");
+                                cl.add("fa-chevron-right");
+                            }
+
+                            // Move the new content below the correct row
+                            var rows = document.getElementsByClassName("trainee-row");
+                            for (var j = 0; j < rows.length; j++)
+                            {
+                                var currentParent = rows[j].querySelector("div");
+                                if (currentParent.getAttribute('data-id') == id)
+                                {
+                                    currentParent.parentNode.appendChild(fullTrainee);
+                                    var tag_i = currentParent.querySelector('i');
+                                    tag_i.classList.remove("fa-chevron-right");
+                                    tag_i.classList.add("fa-chevron-down");
+                                    break;
+                                }
+                            }
+                        }
+                    };
+                    xhr.send();
+                });
+            }
+        });
+    </script>
+{% endblock %}
